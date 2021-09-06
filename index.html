@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sherlock The Blog</title>
+    <link rel='stylesheet' href='./styles/index.css'/>
+    
+</head>
+
+<body>
+    <template id='card-template'>
+        <link rel="stylesheet" href="styles/blog-card.css"/>
+        <style>
+            .cover{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .title{
+                margin:0;
+                font-size: 24px;
+            }
+            .subtitle{
+                font-size: 16px;
+                color:royalblue;
+            }
+        </style>
+        <div class="card">
+            <div class="header">
+                <img class="cover" src="" />
+            </div>
+            <div class='content'>
+                <p class="title"></p>
+                <span class="subtitle"></span>
+            </div>
+        </div>
+    </template>
+    <!-- BLog MOdal Template -->
+    <template id='modal-template'>
+        <link rel="stylesheet" href="./styles/blog-modal.css"/>
+        <div class="wrapper">
+            <div class="overlay">
+                <div class="modal">
+                    <div class="loader"></div>
+                    <p class="close">X</p>
+                    <div class="header">
+                        <div class="title"></div>
+                        <div class="subtitle"></div>
+                    </div>
+                    <div class="body">
+                        <img src=""  class="cover"/>
+                        <div class="synopsis"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <blog-modal title='Blog-Post-1' content='This is the blog 1 and this is the content'></blog-modal>
+    <header class="navbar">Sherlock-The Blog</header>
+    <div id="blog-cards-container"></div>
+    <!-- <div class="loader"></div> -->
+    <script src='./scripts/blog-card.js'></script>
+    <script src='./scripts/blog-modal.js'></script>
+    <script>
+        const titles = [
+            { title: 'The Five Orange Pips', subtitle: ' A delivery of inocous letter followed by death', cover: 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Sherlock_Holmes_in_The_Five_Orange_Pips.jpg',synopsis:'Sherlock Holmes and Dr. Watson are visited by a young man named John Openshaw. He asks Holmes to help him with a hereditary matter that endangers his life.' },
+            { title: 'A study in Scarlett', subtitle: 'John Watson meets SHerlock', cover: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIZvoEBtUk0t2fwFSpeYtEfFhLwqZ1o6M2rg&usqp=CAU',synopsis:'On meeting Holmes through an old friend, Watson is astounded with his brilliant observation skills and they agree to be flatmates and split rent for an apartment on 221B Baker Street' },
+            { title: 'The Hound of Baskervilles', subtitle: 'A mysterious houdn terrifies the town', cover: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNwj6UGyY9dt6_od9y-vvD0cfauXYdR9n8g&usqp=CAU',synopsis:'In the episode, Sherlock (Benedict Cumberbatch) and his crime-solving partner John Watson (Martin Freeman) take on the case of Henry Knight (Russell Tovey), who 20 years earlier witnessed the brutal killing of his father by a "gigantic hound" on Dartmoor. The investigation leads the pair to Baskerville, a military research base. In the conclusion it is revealed that the hounds were images induced by a mind-altering drug, a chemical weapon whose creator was in fact the real murderer of Henry father.'}
+        ];
+        titles.forEach(title=>{
+            let node =document.createElement('blog-card');
+            node.setAttribute('title',title.title);
+            node.setAttribute('subtitle',title.subtitle);
+            node.setAttribute('cover',title.cover);
+
+            document.getElementById('blog-cards-container').appendChild(node);
+        })
+        let cards=document.getElementsByTagName('blog-card');
+        [...cards].forEach(card=>{
+            card.addEventListener('click',()=>{
+                let blogmodal=document.querySelector('blog-modal');
+                let currentblog=titles.filter(title=>title.title===card.getAttribute('title'));
+                blogmodal.setAttribute('open',true);
+                blogmodal.setAttribute('title',card.getAttribute('title'));
+                blogmodal.setAttribute('subtitle',card.getAttribute('subtitle'));
+                blogmodal.setAttribute('synopsis',currentblog[0].synopsis);
+                blogmodal.setAttribute('cover',currentblog[0].cover);
+            })
+        })
+
+    </script>
+
+</body>
+
+</html>
